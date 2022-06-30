@@ -1,0 +1,25 @@
+version: '3.3'
+networks:
+  netwdockercompose4:
+services:
+  db:
+    build: ./mysql/
+    restart: always
+    env_file:
+      - ./env/db.env
+    networks:
+      - netwdockercompose4
+    volumes:
+      - ./mysql/:/docker-entrypoint-initdb.d/
+    
+  backend:
+    build: ./flask/
+    depends_on:
+      - db
+    ports:
+      - 5000:5000
+    restart: always
+    networks:
+      - netwdockercompose4
+    volumes:
+      - /home/catalunha/dockers/docker_battisti/compose6/flask/:/app

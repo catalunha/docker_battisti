@@ -43,3 +43,25 @@ Associando network após container running
 
 `catalunha@pop-os:~/dockers/docker_battisti$ docker network connect flasknetwork 994757d73071`
 
+# compose
+catalunha@pop-os:~/dockers/docker_battisti/compose$ docker-compose up
+
+# compose4
+catalunha@pop-os:~/dockers/docker_battisti/compose4/flask$ docker image build -t flaskcompose .
+
+catalunha@pop-os:~/dockers/docker_battisti/compose4/mysql$ docker image build -t mysqlcompose .
+
+catalunha@pop-os:~/dockers/docker_battisti/compose4$ docker-compose up
+
+
+# compose5
+ao inves de buildar cada imagem separada faz o build junto com o compose.
+
+
+catalunha@pop-os:~/dockers/docker_battisti/compose5$ docker-compose up -d
+
+como visto é possivel, mas o build da imagem junto como compose é uma grande etapa que deve ser feita antes do compose.
+
+
+# compose6
+compartilhando a pasta do app.py para que as alterações no codigo reflitam em tempo real na aplicação.
