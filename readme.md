@@ -19,7 +19,27 @@ catalunha@pop-os:~/dockers/docker_battisti/networks-my/externa$ docker run --rm 
 
 ## container
 catalunha@pop-os:~/dockers/docker_battisti/networks-my/container/mysql$ docker image build -t mysqlnetworkapi .
+
 catalunha@pop-os:~/dockers/docker_battisti/networks-my/container/mysql$ docker network create flasknetwork
+
 catalunha@pop-os:~/dockers/docker_battisti/networks-my/container/mysql$ docker container run -d --rm  --name mysql_api_container --network flasknetwork -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysqlnetworkapi
+
 catalunha@pop-os:~/dockers/docker_battisti/networks-my/container/flask$ docker image build -t flaskapinetwork .
+
 catalunha@pop-os:~/dockers/docker_battisti/networks-my/container/flask$ docker container run -d --rm -p 5000:5000 --name flask_api_network --network flasknetwork flaskapinetwork
+
+Conectando rede apos run do container
+Iniciando containers sem network
+
+`catalunha@pop-os:~/dockers/docker_battisti$ docker container run -d --rm --name mysql_api_container -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysqlnetworkapi
+994757d7307123bbaa7a23836824c0336ecb7bab0584b1f90c8f8d653c73e498`
+
+`catalunha@pop-os:~/dockers/docker_battisti$ docker container run -d --rm --name flaskapinetwork -p 5000:5000 flaskapinetwork
+06819d8712b4f59eaeb3f759b441534289fa516b963592578a2f41c0c1f814d8`
+
+Associando network após container running
+
+`catalunha@pop-os:~/dockers/docker_battisti$ docker network connect flasknetwork 06819d8712b4`
+
+`catalunha@pop-os:~/dockers/docker_battisti$ docker network connect flasknetwork 994757d73071`
+
