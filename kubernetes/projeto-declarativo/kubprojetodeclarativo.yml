@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: kubprojectdeclarative
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: kubproj-app
+  template:
+    metadata:
+    labels:
+      app: kubproj-app
+    spec:
+      containers:
+        - name: kubproj
+          image: catalunha/kubprojeto:1.1

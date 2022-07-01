@@ -258,58 +258,6 @@ services:
 Creating service nginxcompose_web
 [ec2-user@ip-172-31-20-21 ~]$ 
 
-# Kubernets
-Instalando Kubernets
-https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management
-
-Instalando minikube
-https://minikube.sigs.k8s.io/docs/start/
-
-Executando o minikube
-catalunha@pop-os:~/dockers/docker_battisti$ minikube version
-minikube version: v1.26.0
-commit: f4b412861bb746be73053c9f6d2895f12cf78565
-catalunha@pop-os:~/dockers/docker_battisti$ minikube start --driver=docker
-😄  minikube v1.26.0 on Debian bookworm/sid
-✨  Using the docker driver based on user configuration
-📌  Using Docker driver with root privileges
-👍  Starting control plane node minikube in cluster minikube
-🚜  Pulling base image ...
-💾  Downloading Kubernetes v1.24.1 preload ...
-    > preloaded-images-k8s-v18-v1...: 405.83 MiB / 405.83 MiB  100.00% 15.72 Mi
-    > gcr.io/k8s-minikube/kicbase: 386.00 MiB / 386.00 MiB  100.00% 6.57 MiB p/
-    > gcr.io/k8s-minikube/kicbase: 0 B [_________________________] ?% ? p/s 37s
-🔥  Creating docker container (CPUs=2, Memory=4900MB) ...
-🐳  Preparing Kubernetes v1.24.1 on Docker 20.10.17 ...
-    ▪ Generating certificates and keys ...
-    ▪ Booting up control plane ...
-    ▪ Configuring RBAC rules ...
-🔎  Verifying Kubernetes components...
-    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
-🌟  Enabled addons: storage-provisioner, default-storageclass
-🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
-
-catalunha@pop-os:~/dockers/docker_battisti$ minikube status
-minikube
-type: Control Plane
-host: Running
-kubelet: Running
-apiserver: Running
-kubeconfig: Configured
-
-catalunha@pop-os:~/dockers/docker_battisti$ minikube stop
-✋  Stopping node "minikube"  ...
-🛑  Powering off "minikube" via SSH ...
-🛑  1 node stopped.
-
-catalunha@pop-os:~/dockers/docker_battisti$ minikube status
-minikube
-type: Control Plane
-host: Stopped
-kubelet: Stopped
-apiserver: Stopped
-kubeconfig: Stopped
-
-catalunha@pop-os:~/dockers/docker_battisti$ minikube start --driver=docker
-
-catalunha@pop-os:~/dockers/docker_battisti$ minikube dashboard
+O que são os arquivos:
+Dockerfile -> usado para descrever os parametros de uma image
+docker-compose.yml -> usado para descrever um conjunto de imagens que servirão para criar os containers dos serviços
