@@ -65,3 +65,60 @@ como visto é possivel, mas o build da imagem junto como compose é uma grande e
 
 # compose6
 compartilhando a pasta do app.py para que as alterações no codigo reflitam em tempo real na aplicação.
+
+
+# swarm
+Aula 125
+https://www.udemy.com/course/docker-para-desenvolvedores-com-docker-swarm-e-kubernetes/learn/lecture/25397284#questions/16686476
+criadas as 3 instancias
+
+catalunha@pop-os:~/myapp/0keys/aws$ ssh -i "nodeswarm01.pem" ec2-user@ec2-18-207-128-245.compute-1.amazonaws.com
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0777 for 'nodeswarm01.pem' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "nodeswarm01.pem": bad permissions
+ec2-user@ec2-18-207-128-245.compute-1.amazonaws.com: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
+
+catalunha@pop-os:~/myapp/0keys/aws$ sudo chmod 600 nodeswarm01.pem
+[sudo] password for catalunha: 
+catalunha@pop-os:~/myapp/0keys/aws$ ssh -i "nodeswarm01.pem" ec2-user@ec2-18-207-128-245.compute-1.amazonaws.com
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ip-172-31-20-21 ~]$ 
+
+[ec2-user@ip-172-31-20-21 ~]$ sudo yum update -y
+
+[ec2-user@ip-172-31-20-21 ~]$ sudo yum install docker
+
+[ec2-user@ip-172-31-20-21 ~]$ sudo docker ps
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[ec2-user@ip-172-31-20-21 ~]$ sudo service docker start
+Redirecting to /bin/systemctl start docker.service
+[ec2-user@ip-172-31-20-21 ~]$ sudo docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[ec2-user@ip-172-31-20-21 ~]$ 
+
+[ec2-user@ip-172-31-20-21 ~]$ sudo usermod -a -G docker ec2-user
+[ec2-user@ip-172-31-20-21 ~]$ sudo docker info
+Client:
+...
+
+[ec2-user@ip-172-31-20-21 ~]$ sudo docker swarm init
+Swarm initialized: current node (qn9uptqr9x2adi7s72t0h4jro) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-227hqxfpmvh3921jsbxovmhu3p7normgzb1ck0o7ljarzlyu0w-0m96ui7nwt2dj3n0isvv3poao 172.31.20.21:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+[ec2-user@ip-172-31-20-21 ~]$ 
+
+
