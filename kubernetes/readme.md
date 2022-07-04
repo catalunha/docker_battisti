@@ -260,5 +260,81 @@ b35308acf4bf   gcr.io/k8s-minikube/kicbase:v0.0.32   "/usr/local/bin/entr…"   
 catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ docker container stop 4e0ef8bcacae
 
 
+Retornando ao curso em 04-07
 
-finalizei a aula 176
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ minikube start
+😄  minikube v1.26.0 on Debian bookworm/sid
+✨  Using the docker driver based on existing profile
+👍  Starting control plane node minikube in cluster minikube
+🚜  Pulling base image ...
+🔄  Restarting existing docker container for "minikube" ...
+🐳  Preparing Kubernetes v1.24.1 on Docker 20.10.17 ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+    ▪ Using image kubernetesui/dashboard:v2.6.0
+    ▪ Using image kubernetesui/metrics-scraper:v1.0.8
+🌟  Enabled addons: default-storageclass, storage-provisioner, dashboard
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+
+
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ kubectl apply -f kubprojetodeclarativo.yml 
+deployment.apps/kubprojectdeclarative created
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+kubprojectdeclarative-6bc654997f-7vmjl   1/1     Running   0          10s
+kubprojectdeclarative-6bc654997f-c5rfg   1/1     Running   0          10s
+kubprojectdeclarative-6bc654997f-n6tkq   1/1     Running   0          10s
+kubprojectdeclarative-6bc654997f-r9gdv   1/1     Running   0          10s
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ 
+
+
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ minikube dashboard
+🤔  Verifying dashboard health ...
+🚀  Launching proxy ...
+🤔  Verifying proxy health ...
+🎉  Opening http://127.0.0.1:34415/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ in your default browser...
+Opening in existing browser session.
+
+
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ kubectl apply -f kubprojdec-service.yml 
+service/kubprojdec-service created
+
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ kubectl get services
+NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes           ClusterIP      10.96.0.1       <none>        443/TCP          3d4h
+kubprojdec-service   LoadBalancer   10.98.141.225   <pending>     5000:32521/TCP   10s
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ minikube service kubprojdec-service
+|-----------|--------------------|-------------|---------------------------|
+| NAMESPACE |        NAME        | TARGET PORT |            URL            |
+|-----------|--------------------|-------------|---------------------------|
+| default   | kubprojdec-service |        5000 | http://192.168.49.2:32521 |
+|-----------|--------------------|-------------|---------------------------|
+🎉  Opening service default/kubprojdec-service in default browser...
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/projeto-declarativo$ Opening in existing browser session.
+
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/join$ kubectl apply -f kubproj-join.yml 
+service/kubprojdec-service created
+deployment.apps/kubprojectdeclarative created
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/join$ kubectl get services
+NAME                 TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes           ClusterIP      10.96.0.1        <none>        443/TCP          3d5h
+kubprojdec-service   LoadBalancer   10.100.146.117   <pending>     5000:31567/TCP   12s
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/join$ kubectl get pods
+NAME                                    READY   STATUS    RESTARTS   AGE
+kubprojectdeclarative-5f7c86d54-klc7z   1/1     Running   0          16s
+kubprojectdeclarative-5f7c86d54-sfgn2   1/1     Running   0          16s
+kubprojectdeclarative-5f7c86d54-vf9gt   1/1     Running   0          16s
+kubprojectdeclarative-5f7c86d54-xtgs2   1/1     Running   0          16s
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/join$ minikube service kubprojdec-service
+|-----------|--------------------|-------------|---------------------------|
+| NAMESPACE |        NAME        | TARGET PORT |            URL            |
+|-----------|--------------------|-------------|---------------------------|
+| default   | kubprojdec-service |        5000 | http://192.168.49.2:31567 |
+|-----------|--------------------|-------------|---------------------------|
+🎉  Opening service default/kubprojdec-service in default browser...
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/join$ Opening in existing browser session.
+
+catalunha@pop-os:~/dockers/docker_battisti/kubernetes/join$ kubectl delete -f kubproj-join.yml 
+service "kubprojdec-service" deleted
+deployment.apps "kubprojectdeclarative" deleted
+
